@@ -20,8 +20,3 @@ services:
     ports:
       - port: 5432
         protocol: TCP
-    initCommands:
-      - |
-        psql -U postgres -d default -c "CREATE EXTENSION IF NOT EXISTS pg_graphql;"
-      - |
-        psql -U postgres -d default -c "CREATE EXTENSION IF NOT EXISTS postgis;"
