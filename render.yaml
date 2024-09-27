@@ -1,0 +1,18 @@
+- type: pserv
+  name: twenty_postgres
+  plan: starter
+  runtime: image
+  image:
+    url: twentycrm/twenty-postgres:latest
+  autoDeploy: true
+  disk:
+    name: data
+    mountPath: /var/lib/postgresql/data
+    sizeGB: 10
+  envVars:
+  - key: POSTGRES_USER
+    value: postgres
+  - key: POSTGRES_PASSWORD
+    value: postgres
+  - key: POSTGRES_DB
+    value: default
