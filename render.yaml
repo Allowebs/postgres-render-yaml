@@ -1,19 +1,30 @@
 services:
-- type: pserv
-  name: twenty_postgres
-  plan: starter
-  runtime: image
-  image:
-    url: twentycrm/twenty-postgres:latest
-  autoDeploy: true
-  disk:
-    name: data
-    mountPath: /var/lib/postgresql/data
-    sizeGB: 10
-  envVars:
-  - key: POSTGRES_USER
-    value: postgres
-  - key: POSTGRES_PASSWORD
-    value: postgres
-  - key: POSTGRES_DB
-    value: default
+  - type: pserv
+    name: postgres_db
+    plan: starter
+    runtime: image
+    image:
+      url: twentycrm/twenty-postgres:latest
+    autoDeploy: true
+    disk:
+      name: postgres_data
+      mountPath: /var/lib/postgresql/data
+      sizeGB: 10
+    envVars:
+      - key: POSTGRES_USER
+        value: postgres
+      - key: POSTGRES_PASSWORD
+        value: postgres
+      - key: POSTGRES_DB
+        value: default
+    healthCheck:
+      path: /health
+      port: 5432
+    ports:
+      - port: 5432
+        protocol: TCP
+    initCommands:
+      - |
+        psql -U postgres -d default -c "CREATE EXTENSION IF NOT EXISTS pg_graphql;"
+      - |
+        psql -U postgres -d default -c "CREATE EXTENSION IF NOT EXISTS postgis;"
