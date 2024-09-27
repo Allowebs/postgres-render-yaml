@@ -17,9 +17,6 @@ services:
         value: postgres
       - key: POSTGRES_DB
         value: default
-    healthCheck:
-      path: /health
-      port: 5432
     ports:
       - port: 5432
         protocol: TCP
